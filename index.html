@@ -137,14 +137,13 @@ canvas{display:block;width:100%;cursor:none;}
         </div>
       </div>
       <button class="btn" id="main-btn">► START GAME</button>
-      <div class="ov-sub">arrow keys · space to shoot · P to pause</div>
+      <div class="ov-sub">arrow keys · space to shoot</div>
     </div>
   </div>
   <div class="footer">
     <div class="ctrl">
       <span><span class="kbd">← →</span> move</span>
       <span><span class="kbd">space</span> shoot</span>
-      <span><span class="kbd">P</span> pause</span>
     </div>
     <a class="back" href="https://github.com/ej-lan">github.com/ej-lan</a>
   </div>
@@ -553,17 +552,6 @@ function draw(dt=0) {
   }
   cx.globalAlpha=1; cx.textAlign='left';
 
-  // paused overlay on canvas
-  if (state === 'paused') {
-    cx.fillStyle='rgba(17,17,27,0.75)'; cx.fillRect(0,0,W,H);
-    cx.fillStyle='#cdd6f4'; cx.font='bold 22px JetBrains Mono,monospace';
-    cx.textAlign='center';
-    cx.fillText('PAUSED', W/2, H/2-8);
-    cx.fillStyle='#6c7086'; cx.font='11px JetBrains Mono,monospace';
-    cx.fillText('press P to resume', W/2, H/2+18);
-    cx.textAlign='left';
-  }
-
   // transition overlay
   if(state==='transition') {
     const a = Math.sin(transTimer*Math.PI/1.2);
@@ -648,9 +636,6 @@ function hideOverlay() {
 document.addEventListener('keydown', e=>{
   keys[e.code]=true;
   if(['Space','ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.code)) e.preventDefault();
-  if(e.code==='KeyP' && (state==='playing'||state==='paused')) {
-    state = state==='paused' ? 'playing' : 'paused';
-  }
   // space or enter to start from splash / gameover
   if((e.code==='Space'||e.code==='Enter') && (state==='splash'||state==='gameover')) {
     startGame();
